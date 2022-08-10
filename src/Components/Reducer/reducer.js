@@ -1,5 +1,5 @@
 const defaultState = {
-  text: "initial",
+  text: "",
   foo: {
     bar: "zoo",
     nested: {
@@ -19,6 +19,11 @@ export default function (state = defaultState, action = {}) {
           bar: action.text,
         },
       };
+    case "SUBMIT":
+      console.log(state, action)
+      action.auth.mock = false
+      alert("\n\nInput Submitted!\nSubmitted Input: " + action.text + "\nAuth: " + action.auth.mock)
+      return defaultState
     default:
       return state;
   }

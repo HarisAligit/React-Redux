@@ -6,7 +6,7 @@ import rootReducer from "../Reducer/reducer";
 
 const configureStore = (initialState = {}) => {
   const reducer = combineReducers({
-    auth: () => ({ mock: true }),
+    auth: () => ({ mock: true}),
     form: persistReducer(
       {
         key: "form", // key for localStorage key, will be: "persist:form"

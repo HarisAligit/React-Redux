@@ -1,14 +1,20 @@
 import React from "react";
-import { render } from "react-dom";
 import configureStore from "./Components/Store-Redux/store";
-import { Provider, connect } from "react-redux";
-import { PersistGate } from "redux-persist/lib/integration/react";
+import { connect } from "react-redux";
 
 // action creator
 function updateText(text) {
   return {
     type: "UPDATE",
     text,
+  };
+}
+
+function submitText(props) {
+  return {
+    type: "SUBMIT",
+    auth: props.auth,
+    text: props.text,
   };
 }
 
@@ -19,27 +25,31 @@ const styles = {
 
 const { store, persistor } = configureStore();
 
-class App extends React.Component {
-  onUpdateText = (e) => {
-    this.props.dispatch(updateText(e.nativeEvent.target.value));
+const App = (props) => {
+  console.log("Props: ", props);
+  const onUpdateText = (e) => {
+    props.dispatch(updateText(e.nativeEvent.target.value));
   };
 
-  render() {
+  const onSubmit = (props) => {
+    props.dispatch(submitText(props))
+  }
     return (
       <div style={styles}>
         <h2>Start editing to see some magic happen {"\u2728"}</h2>
-        <input value={this.props.text} onChange={this.onUpdateText} />
+        <input value={props.text} onChange={onUpdateText} />
+        <button onClick={() => onSubmit(props)}>Submit</button>
         <pre style={{ textAlign: "left" }}>
-          {JSON.stringify(this.props.foo, undefined, 2)}
+          {JSON.stringify(props.foo, undefined, 2)}
         </pre>
       </div>
     );
-  }
 }
 
 const mapStateToProps = (state) => ({
   text: state.form.text,
   foo: state.form.foo,
+  auth: state.auth,
 });
 
 const ConnectedApp = connect(mapStateToProps)(App);
