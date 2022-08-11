@@ -18,6 +18,24 @@ function submitText(props) {
   };
 }
 
+const serviceAPI = async (dispatch, state) => {
+  let url = 'http://time.jsontest.com';
+  let res = await fetch(url);
+
+  if (res.ok) {
+    let json = await res.json();
+    dispatch({ type: 'ASYNC', payload: json})
+  } else {
+    dispatch({ type: 'ASYNC', payload: "Err! Fetch Failed!" })
+  }
+}
+
+function async() {
+  return {
+    type: "ASYNC",
+  };
+}
+
 const styles = {
   fontFamily: "sans-serif",
   textAlign: "center",
@@ -42,15 +60,20 @@ const App = (props) => {
         <pre style={{ textAlign: "left" }}>
           {JSON.stringify(props.foo, undefined, 2)}
         </pre>
+        <button onClick={() => props.dispatch(serviceAPI)}> Async Call </button>
       </div>
     );
 }
 
-const mapStateToProps = (state) => ({
-  text: state.form.text,
-  foo: state.form.foo,
-  auth: state.auth,
-});
+const mapStateToProps = (state) =>
+{
+  console.log("I am state: ", state)
+  return {
+  text: state?.form?.text,
+  foo: state?.form?.foo,
+  auth: state?.form?.auth,
+  payload: state?.form?.payload,
+  }};
 
 const ConnectedApp = connect(mapStateToProps)(App);
 

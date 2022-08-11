@@ -4,6 +4,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "../Reducer/reducer";
 import thunk from "redux-thunk";
+import { PURGE } from "redux-persist";
 
 const configureStore = (initialState = {}) => {
   const reducer = combineReducers({
@@ -17,9 +18,13 @@ const configureStore = (initialState = {}) => {
       },
       rootReducer
     ),
-  });
-
-  const middleware = applyMiddleware(thunk);
+    // extraReducers: (builder) => {
+    //   builder.addCase(PURGE, (state) => {
+    //     customEntityAdapter.removeAll(state);
+    //   });
+    // }
+  }
+);
 
   const store = createStore(
     persistReducer(
@@ -30,9 +35,9 @@ const configureStore = (initialState = {}) => {
         whitelist: ["auth"],
       },
       reducer,
-      middleware,
     ),
-    initialState
+    initialState,
+    applyMiddleware(thunk),
   );
 
   console.log("initialState", store.getState());
