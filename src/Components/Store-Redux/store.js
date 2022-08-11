@@ -1,8 +1,9 @@
 //store.js
-import { createStore, combineReducers } from "redux";
+import {createStore, combineReducers, applyMiddleware} from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "../Reducer/reducer";
+import thunk from "redux-thunk";
 
 const configureStore = (initialState = {}) => {
   const reducer = combineReducers({
@@ -18,6 +19,8 @@ const configureStore = (initialState = {}) => {
     ),
   });
 
+  const middleware = applyMiddleware(thunk);
+
   const store = createStore(
     persistReducer(
       {
@@ -26,7 +29,8 @@ const configureStore = (initialState = {}) => {
         storage,
         whitelist: ["auth"],
       },
-      reducer
+      reducer,
+      middleware,
     ),
     initialState
   );
