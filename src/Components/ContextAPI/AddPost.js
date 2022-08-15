@@ -2,26 +2,27 @@ import React, { useContext, useState } from 'react';
 import {AppContext} from "../../Context/context";
 
 const AddPost = () => {
-  const { dispatchUserEvent } = useContext(AppContext);
-  const [ name, setName ] = useState('');
-  const [ age, setAge ] = useState('');
-  const [ bio, setBio ] = useState('');
+  const { limit, dispatchUserEvent } = useContext(AppContext);
+  const [ title, setTitle ] = useState('');
+  const [ body, setBody ] = useState('');
+  const [ number, setNumber ] = useState(0);
 
-  const handleAddUser = () => {
-    const user = { id: Math.random(), name, age, bio };
-    dispatchUserEvent('ADD_USER', { newUser: user });
+  const handleAddPost = () => {
+    const newLimit = limit + 1;
+    const post = { userId: 2, id: newLimit, title, body };
+    dispatchUserEvent('ADD_POST', { newPost: post, newLimit: newLimit });
   };
 
   return (
     <div>
       <h3>Add New User</h3>
-      <input type="text" value={name} onChange={e => {setName(e.target.value)}}placeholder="name"/>
+      <input type="number" value={number} onChange={e => {setNumber(e.target.value)}}placeholder="number"/>
+      <br />
+			<input type="text" value={title} onChange={e => {setTitle(e.target.value)}} placeholder="title"/>
 			<br />
-			<input type="text" value={age} onChange={e => {setAge(e.target.value)}} placeholder="age"/>
+			<textarea type="text" value={body} onChange={e => {setBody(e.target.value)}} placeholder="body"/>
 			<br />
-			<textarea type="text" value={bio} onChange={e => {setBio(e.target.value)}} placeholder="bio"/>
-			<br />
-			<button onClick={handleAddUser}>Add User</button>
+			<button onClick={handleAddPost}>Add Post</button>
 		</div>
 	);
 };

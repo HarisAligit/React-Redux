@@ -14,11 +14,9 @@ const Post = ({ post }) => {
         <h2 className="post-title">{post.title}</h2>
         <p className="post-body">{post.body}</p>
         <div className="button">
-          <div className="delete-btn">Delete</div>
+          <button className="delete-btn" onClick={handleRemoveUser}>Delete Post</button>
         </div>
       </div>
-
-      <button onClick={handleRemoveUser}>Delete Post</button>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const PostList = () => {
       {posts.map(post => (
         <Post key={post.id} post={post}/>
       ))
-      })}
+      }
     </div>
   );
 };
