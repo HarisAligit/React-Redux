@@ -1,10 +1,25 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {AppContext} from "./Context/context";
 import AddPost from "./Components/ContextAPI/AddPost";
 import PostList from "./Components/ContextAPI/PostList";
+import {client} from "./Components/Shared/client";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await client.get('?_limit=10');
+      setPosts(response.data);
+    }
+    catch (err) {
+      return new Error(`Error Encountered! \n ${err.message}`)
+    }
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, [])
 
   const dispatchUserEvent = (actionType, payload) => {
     switch (actionType) {
