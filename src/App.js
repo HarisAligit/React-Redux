@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {AppContext} from "./Context/context";
-import AddUser from "./Components/ContextAPI/AddUser";
-import UserList from "./Components/ContextAPI/UserList";
+import AddPost from "./Components/ContextAPI/AddPost";
+import PostList from "./Components/ContextAPI/PostList";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -22,8 +22,8 @@ const App = () => {
   return (
     <div>
       <AppContext.Provider value={{users, dispatchUserEvent}}>
-        <AddUser />
-        <UserList />
+        <AddPost />
+        <PostList />
       </AppContext.Provider>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import {AppContext} from "../../Context/context";
 
-const AddUser = () => {
+const AddPost = () => {
   const { dispatchUserEvent } = useContext(AppContext);
   const [ name, setName ] = useState('');
   const [ age, setAge ] = useState('');
@@ -26,4 +26,4 @@ const AddUser = () => {
 	);
 };
 
-export default AddUser;
+export default AddPost;
