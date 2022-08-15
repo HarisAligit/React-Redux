@@ -4,15 +4,15 @@ import AddPost from "./Components/ContextAPI/AddPost";
 import PostList from "./Components/ContextAPI/PostList";
 
 const App = () => {
-  const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   const dispatchUserEvent = (actionType, payload) => {
     switch (actionType) {
       case 'ADD_USER':
-        setUsers([...users, payload.newUser]);
+        setPosts([...posts, payload.newPost]);
         return;
-      case 'REMOVE_USER':
-        setUsers(users.filter(user => user.id !== payload.userId));
+      case 'REMOVE_POST':
+        setPosts(posts.filter(post => post.id !== payload.postId));
         return;
       default:
         return;
@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <div>
-      <AppContext.Provider value={{users, dispatchUserEvent}}>
+      <AppContext.Provider value={{posts, dispatchUserEvent}}>
         <AddPost />
         <PostList />
       </AppContext.Provider>
